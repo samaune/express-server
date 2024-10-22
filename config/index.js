@@ -11,11 +11,14 @@ const mssql_conf = {
   port: 1433,
   type: "mssql",
   requestTimeout: 60000,
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000
+  },
   options: {
-    trustedConnection: false,
-    encrypt: false,
-    enableArithAbort: true,
-    trustServerCertificate: true,
+    encrypt: false, // for azure
+    trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 }
 
@@ -45,14 +48,14 @@ export default {
   },
   db: {
     singha: {
-      server: env.MSSQL_HOST || "localhost",
+      server: env.MSSQL_HOST || "172.20.160.1",
       database: env.MSSQL_DB,
       user: env.MSSQL_USERNAME || 'sa',
       password: env.MSSQL_PASSWORD,
       ...mssql_conf
     },
     noa: {
-      server: env.MSSQL_HOST || "localhost",
+      server: env.MSSQL_HOST || "172.20.160.1",
       database: 'NOA',
       user: env.MSSQL_USERNAME || 'sa',
       password: env.MSSQL_PASSWORD,
